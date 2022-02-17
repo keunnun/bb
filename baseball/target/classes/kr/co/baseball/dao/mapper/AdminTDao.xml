@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.AdminTDao">
+
+	<select id="teamlist" resultType="kr.co.baseball.dto.TeamDto">
+		select * from team order by tid*1
+	</select>
+	
+	<insert id="teamwrite_ok" parameterType="kr.co.baseball.dto.TeamDto">
+		insert into team(tid,tname,office,hpo,home,cyear,area,owner,ceo,leader,director,win,winsub,imgname)
+		values(#{tid},#{tname},#{office},#{hpo},#{home},#{cyear},#{area},#{owner},#{ceo},#{leader},#{director},#{win},#{winsub},#{imgname})
+	</insert>
+	
+	<select id="teamupdate" resultType="kr.co.baseball.dto.TeamDto">
+		select * from team where tid=#{param1}
+	</select>
+	
+	<update id="teamupdate_ok" parameterType="kr.co.baseball.dto.TeamDto">
+		update team set tname=#{tname},office=#{office},hpo=#{hpo},home=#{home},cyear=#{cyear},area=#{area},
+		owner=#{owner},ceo=#{ceo},leader=#{leader},director=#{director},win=#{win},winsub=#{winsub},imgname=#{imgname}
+		where tid=#{tid}
+	</update>
+	
+	<delete id="teamdelete">
+		delete from team where tid=#{param1}
+	</delete>
+	
+	<select id="page_cnt" resultType="Integer">
+		select ceil(count(*)/30) as cnt from fighting
+	</select>
+	
+	<select id="list" resultType="kr.co.baseball.dto.TeamFightingDto">
+		select * from fighting natural join team where ${param2} like concat('%',#{param3},'%') 
+		order by fid desc limit #{param1},30
+	</select>
+	
+	<delete id="delete">
+		delete from fighting where fid=#{param1}
+	</delete>
+	
+</mapper>
+	

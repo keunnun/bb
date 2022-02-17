@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.PlayersDao">
+	<select id="list" resultType="kr.co.baseball.dto.MainDto">
+	<![CDATA[ select * from playercord
+	where g>60 and year=#{param1}]]> order by ${param2} ${param3} limit 30;
+	   <!-- #으로 받으면 '값'형태로오고                                       이부분은 컬럼명 기준이라 쿼리에서" "이없어야하므로 달러로표시
+	   $형태로 받으면 값 형태로온다 차이점구분 
+	   maria 에선 $ # 다나옴 여기선 스트링인데
+	   $하면' '가안들어가서 에러남-->
+	</select>
+	
+	<select id="list2" resultType="kr.co.baseball.dto.MainDto">
+	<![CDATA[ select * from playercord
+	where year=#{param1} and h>106 and hbp>0]]> order by ${param2} ${param3} limit 30;
+	<!-- maria에선 상관없지만 #을해야 값이' '으로들어와서
+	String형태로 사용할땐 # 을사용  -->
+	</select>
+
+	<select id="listPrf" resultType="kr.co.baseball.dto.MainDto">
+	select * from playerinfo where pid=#{param1};
+	</select>
+	
+	<select id="listPrf2" resultType="kr.co.baseball.dto.MainDto">
+	select * from playerplay where pid=#{param1};
+	</select>
+	
+	<select id="listPrf3" resultType="kr.co.baseball.dto.MainDto">
+	select * from playercord where pid=#{param1};
+	</select>
+	
+	<select id="listPrf32" resultType="kr.co.baseball.dto.MainDto">
+	select * from playercord where gid=#{param1};
+	</select>
+	
+</mapper>

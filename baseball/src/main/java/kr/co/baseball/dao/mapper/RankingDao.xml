@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.RankingDao">
+	
+	<select id="rlist" resultType="kr.co.baseball.dto.RankingDto">
+		select * from teamrank where year=#{param1} order by rank*1 asc
+	</select>
+
+</mapper>
+	

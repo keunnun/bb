@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.StoreDao">
+	
+	<select id="point_chk" resultType="Integer">
+		select point from member where userid=#{param1}
+	</select>
+	
+	<select id="chk" resultType="Integer">
+		select count(*) from product where userid=#{param1} and proname=#{param2}
+	</select>
+	
+	<select id="coupon" resultType="Integer">
+		select count(*) from product where coupon=#{param1}
+	</select>
+	
+	<insert id="purchase" parameterType="kr.co.baseball.dto.ProductDto">
+		insert into product(coupon,proname,price,imgname,userid)
+		values(#{coupon},#{proname},#{price},#{imgname},#{userid})
+	</insert>
+	
+	<update id="point_sub" parameterType="kr.co.baseball.dto.ProductDto">
+		update member set point=point-#{param1} where userid=#{param2}
+	</update>
+	
+</mapper>
+	

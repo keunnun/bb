@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.MemberDao">
+  <select id="member_ok" parameterType="kr.co.baseball.dto.MemberDto">
+    insert into member (userid,name,pwd,email,phone,juso1,juso2,juso3,mday)
+    values(#{userid},#{name},#{pwd},#{email},#{phone},#{juso1},#{juso2},#{juso3},now())
+  </select>
+  <select id="get_check" resultType="Integer">
+    select count(*) from member where userid=#{param1}
+  </select>
+  <update id="get_chupoint" parameterType="kr.co.baseball.dto.MemberDto">
+    update member set point=point+5 where userid=#{param1} or userid=#{param2}
+  </update>
+  <select id="get_pwd" resultType="String">
+    select pwd from member where mid=#{param1}
+  </select>
+  <select id="login_ok" parameterType="kr.co.baseball.dto.MemberDto" resultType="kr.co.baseball.dto.MemberDto">
+    select * from member where userid=#{userid} and pwd=#{pwd}
+  </select>
+  <select id="userid_search_ok" resultType="String" parameterType="kr.co.baseball.dto.MemberDto">
+    select userid from member where name=#{name} and email=#{email}
+  </select>
+  <select id="userpwd_search_ok2" resultType="String" parameterType="kr.co.baseball.dto.MemberDto">
+    select pwd from member where userid=#{userid}
+  </select>
+  <update id="userpwd_check_ok" parameterType="kr.co.baseball.dto.MemberDto">
+    update member set pwd=#{pwd}
+    where userid=#{userid} and name=#{name} and email=#{email}
+  </update>
+  <select id="mypage" resultType="kr.co.baseball.dto.MemberDto">
+    select * from member where userid=#{param1}
+  </select>
+  <select id="mypage_update" resultType="kr.co.baseball.dto.MemberDto">
+    select * from member where mid=#{param1}
+  </select>
+  <update id="mypage_update_ok" parameterType="kr.co.baseball.dto.MemberDto">
+    update member set name=#{name},pwd=#{pwd},phone=#{phone},email=#{email},
+    juso1=#{juso1},juso2=#{juso2},juso3=#{juso3} where mid=#{mid}
+  </update>
+  <delete id="mypage_delete">
+    delete from member where mid=#{param1}
+  </delete>
+
+
+  <select id="get_emailcheck" resultType="Integer">
+    select count(*) from member where email=#{param1}
+  </select>
+  <select id="mycoupon" resultType="kr.co.baseball.dto.ProductDto">
+  	select * from product where userid=#{param1}
+  </select>
+</mapper>
+	

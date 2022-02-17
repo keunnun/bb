@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.GamesDao">
+	<insert id="pl_ok" parameterType="kr.co.baseball.dto.GamesDto">
+		insert into games
+		(days,year,month,day,gtime,hxt,ext,parea,hxscore,exscore,reason,fannum,exresult,hxresult)
+		values(#{days},#{year},#{month},#{day},#{gtime},#{hxt},#{ext},#{parea},"-","-","-",0,"
+		"," ")
+	</insert>
+	<insert id="pls_ok" parameterType="kr.co.baseball.dto.GamesDto">
+		insert into games
+		(days,year,month,day,gtime,hxt,ext,parea,hxscore,exscore,reason,fannum,exresult,hxresult)
+		values(#{days},#{year},#{month},#{day},#{gtime},#{hxt},#{ext},#{parea},#{hxscore},#{exscore},#{reason},#{fannum},#{exresult},#{hxresult})
+	</insert>
+	<select id="upd" resultType="kr.co.baseball.dto.GamesDto">
+		select * from games where gnum=#{param1}
+	</select>
+	<update id="upd_ok" parameterType="kr.co.baseball.dto.GamesDto">
+		update games set day=
+		#{days},year=#{year},month=#{month},day=#{day},hxt=#{hxt},ext=#{ext},parea=#{parea},
+		hxscore=#{hxscore},exscore=#{exscore},reason=#{reason},hxresult=#{hxresult},exresult=#{exresult},fannum=#{fannum}
+		where gnum=${gnum}
+	</update>
+	<delete id="del">
+		delete from games where gnum=#{param1}
+	</delete>
+</mapper>
+	

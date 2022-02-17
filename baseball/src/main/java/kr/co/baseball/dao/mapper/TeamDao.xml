@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.TeamDao">
+	
+	<select id="teaminfo" resultType="kr.co.baseball.dto.TeamDto">
+		select * from team order by tid*1
+	</select>
+	
+	<select id="list" resultType="kr.co.baseball.dto.TeamDto">
+		select * from team where tid=#{param1}
+	</select>
+	
+	<insert id="write_ok" parameterType="kr.co.baseball.dto.TeamFightingDto">
+		insert into fighting(userid,title,content,writeday,tid)
+		values(#{userid},#{title},#{content},now(),#{tid})
+	</insert>
+	
+	<select id="list2" resultType="kr.co.baseball.dto.TeamFightingDto">
+		select * from fighting where tid=#{param1} and ${param3} like concat('%',#{param4},'%') 
+		order by fid desc limit #{param2},10
+	</select>
+	<!-- 
+	field = title
+	#{field} = "title"
+	${field} = title
+	  -->
+	
+	<select id="page_cnt" resultType="Integer">
+		select ceil(count(*)/10) as cnt from fighting
+	</select>
+	
+	<select id="chu_check" resultType="Integer">
+		select count(*) from chuinfo where userid=#{param1} and fid=#{param2}
+	</select>
+	
+	<update id="chu">
+		update fighting set chu=chu+1
+		where fid=#{param1}
+	</update>
+	
+	<update id="get_point" parameterType="kr.co.baseball.dto.MemberDto">
+		update member set point=point+1 where userid=#{userid}
+	</update>
+	
+	<select id="get_chu" resultType="Integer">
+		select chu from fighting where fid=#{param1}
+	</select>
+	
+	<insert id="chuinfo">
+		insert into chuinfo(userid,fid) values(#{param1},#{param2})
+	</insert>
+	
+	<select id="content" resultType="kr.co.baseball.dto.TeamFightingDto">
+		select * from fighting where fid=#{param1}
+	</select>
+	
+	<update id="update_ok" parameterType="kr.co.baseball.dto.TeamFightingDto">
+		update fighting set title=#{title},content=#{content}
+		where fid=#{fid}
+	</update>
+	
+	<delete id="delete">
+		delete from fighting where fid=#{param1}
+	</delete>
+</mapper>
+	

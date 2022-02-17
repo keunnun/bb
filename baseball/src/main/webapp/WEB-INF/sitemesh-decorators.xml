@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views/top">
+	<!-- 제외할 패턴 -->
+	<excludes>
+		<!-- <pattern>/</pattern> sitemesh를 전체 문서에서 제외 -->
+		<!-- <pattern>/test</pattern> sitemesh를 입력한뷰에서 제외 -->
+		<!-- <pattern>/member/</pattern> sitemesh를 입력한 폴더에서제외 -->
+		<pattern>/main/*</pattern>
+	</excludes>
+	<!-- 기본 패턴 -->
+	<decorator name="top" page="top.jsp">
+		<pattern>*</pattern> 
+	</decorator>
+ 
+	<!-- 모바일 패턴 -->
+	<decorator name="mobileDefault" page="mobileDefault.jsp">
+		<pattern>/m.*.do</pattern> 
+	</decorator>
+</decorators>
+
+ 

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybats-3-mapper.dtd">
+
+<mapper namespace="kr.co.baseball.dao.AdminpDao">
+
+	<select id="get_pagecount" resultType="Integer">
+     select ceil(count(*)/10) from playerinfo where ${param1} like concat('%',#{param2},'%');
+  	</select>  <!-- 끝 페이지구하기위한제물 -->
+  	
+  	<select id="get_pagecount2" resultType="Integer">
+     select ceil(count(*)/10) from playerplay where ${param1} like concat('%',#{param2},'%');
+  	</select>  <!-- 끝 페이지구하기위한제물 -->
+  	
+  	<select id="get_pagecount3" resultType="Integer">
+     select ceil(count(*)/10) from playercord where ${param1} like concat('%',#{param2},'%');
+  	</select>  <!-- 끝 페이지구하기위한제물 -->
+	
+	<select id="listall" resultType="kr.co.baseball.dto.MainDto">
+	select * from playerinfo where ${param1} like concat('%',#{param2},'%') limit #{param3},10 
+	     <!-- #을하면 'title'이런식으로들어가져서 안됨 지금 필드명이라 title이온전히들어가야해서 달러쓰기 -->
+	     <!-- 그리고 like 뒤 '%#{param2}%' 이렇게해야되는데 xml은 %처리를못해서 문자열로처리해야함 -->
+	     <!-- concat 까지 param1,2 는 검색부분 param3부분은 페이징처리부분 합쳐서 쿼리한방에 -->
+	</select>
+	
+	<select id="listall2" resultType="kr.co.baseball.dto.MainDto">
+	  select * from playerplay where ${param1} like concat('%',#{param2},'%') limit #{param3},10  
+	</select>
+	
+	<select id="listall3" resultType="kr.co.baseball.dto.MainDto">
+	  select * from playercord where ${param1} like concat('%',#{param2},'%') limit #{param3},10       
+	</select>
+		
+	<insert id="write_ok" parameterType="kr.co.baseball.dto.MainDto">
+		insert into playerinfo(pid,pname,birth,spec,pyear,lank,pmoney)
+		values(#{pid},#{pname},#{birth},#{spec},#{pyear},#{lank},#{pmoney})
+	</insert>  <!-- 선수 추가 기능 -->
+	
+  <select id="update" resultType="kr.co.baseball.dto.MainDto">
+     select * from playerinfo where pid=#{param1}
+  </select>
+	
+  <update id="update_ok" parameterType="kr.co.baseball.dto.MainDto">
+    update playerinfo set pname=#{pname},birth=#{birth},spec=#{spec},
+    pyear=#{pyear},lank=#{lank},pmoney=#{pmoney} where pid=#{pid}
+  </update>
+	
+  <delete id="delete">
+    delete from playerinfo where pid=#{param1}
+  </delete>
+	
+	<insert id="write_ok2" parameterType="kr.co.baseball.dto.MainDto">
+		insert into playerplay(pid,ymoney,bnum,position,career)
+		values(#{pid},#{ymoney},#{bnum},#{position},#{career})
+	</insert>  
+	
+  <select id="update2" resultType="kr.co.baseball.dto.MainDto">
+     select * from playerplay where pid=#{param1}
+  </select>
+	
+  <update id="update_ok2" parameterType="kr.co.baseball.dto.MainDto">
+    update playerplay set ymoney=#{ymoney},bnum=#{bnum},position=#{position},
+    career=#{career} where pid=#{pid}
+  </update>
+	
+  <delete id="delete2">
+    delete from playerplay where pid=#{param1}
+  </delete>
+	
+	<insert id="write_ok3" parameterType="kr.co.baseball.dto.MainDto">
+		insert into playercord(gid,pname,year,tname,avg,g,h,
+		b2,b3,hr,bb,obp,slg,so,era,ip,hbp,r,pid)
+		values(#{gid},#{pname},#{year},#{tname},#{avg},#{g},#{h},
+		#{b2},#{b3},#{hr},#{bb},#{obp},#{slg},#{so},
+		#{era},#{ip},#{hbp},#{r},#{pid})
+	</insert>  
+	
+  <select id="update3" resultType="kr.co.baseball.dto.MainDto">
+     select * from playercord where gid=#{param1}
+  </select>
+	
+  <update id="update_ok3" parameterType="kr.co.baseball.dto.MainDto">
+    update playercord set pname=#{pname},year=#{year},tname=#{tname},
+    AVG=#{avg},G=#{g},H=#{h},B2=#{b2},B3=#{b3},HR=#{hr},BB=#{bb},OBP=#{obp},
+    SLG=#{slg},SO=#{so},ERA=#{era},IP=#{ip},HBP=#{hbp},R=#{r} where gid=#{gid}
+  </update>
+  
+   <delete id="delete3">
+    delete from playercord where gid=#{param1}
+  </delete>
+  
+   <select id="get_check" resultType="Integer">
+    select count(*) from playerinfo where pid=#{param1}
+  </select>
+  
+    <select id="get_check2" resultType="Integer">
+    select count(*) from playercord where gid=#{param1}
+  </select>
+</mapper>
